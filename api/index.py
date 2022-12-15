@@ -60,17 +60,17 @@ def handle_message(event):
         return
 
     if event.message.text.upper().startswith('CALL', 0, 4):
-        result = findYT(messageText.split(" ")[1])
+        result = findYT(event.message.text.split(" ")[1])
         TextSendMessage(text='https://www.youtube.com/watch?v=%s' % result)
-       return
+        return
 
-        if working_status and event.message.text.startswith('柴柴'):
-        chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
-        reply_msg = chatgpt.get_response().replace("AI:", "", 1)
-        chatgpt.add_msg(f"AI:{reply_msg}\n")
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_msg))
+        if working_status and event.message.text.startswith('柴柴',0, 4):
+            chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
+            reply_msg = chatgpt.get_response().replace("AI:", "", 1)
+            chatgpt.add_msg(f"AI:{reply_msg}\n")
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply_msg))
 
 if __name__ == "__main__":
     app.run()
