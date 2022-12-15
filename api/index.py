@@ -9,9 +9,15 @@ import os
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
+yt_id = os.getenv('YT_API_KEY', None)
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
+
+def findYT(keyword):
+    r = requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+keyword+'&maxResults=1&order=relevance&key='+yt_id)
+    data = json.loads(r.text)
+    return data['items'][0]['id']['videoId']
 
 # domain root
 @app.route('/')
@@ -50,10 +56,15 @@ def handle_message(event):
         working_status = False
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
+            TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「柴柴說話」 > <"))
         return
 
-    if working_status and event.message.text.startswith('柴柴'):
+    if event.message.text.upper().startswith('CALL', 0, 4):
+        result = findYT(messageText.split(" ")[1])
+        TextSendMessage(text='https://www.youtube.com/watch?v=%s' % result)
+       return
+
+        if working_status and event.message.text.startswith('柴柴'):
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
         chatgpt.add_msg(f"AI:{reply_msg}\n")
