@@ -61,8 +61,9 @@ def handle_message(event):
     if event.message.text.upper().startswith('CALL', 0, 4):
         result = findYT(event.message.text.split(" ")[1])
         YT_link = 'https://www.youtube.com/watch?v=' + result
-        print(YT_link)
-        TextSendMessage(text=YT_link)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=YT_link))
         return
 
     if working_status and event.message.text.startswith('柴柴',0, 4):
