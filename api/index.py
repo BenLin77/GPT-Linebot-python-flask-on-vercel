@@ -60,6 +60,7 @@ def handle_message(event):
 
     if event.message.text.upper().startswith('CALL', 0, 4):
         result = findYT(event.message.text.split(" ")[1])
+        print(result)
         TextSendMessage(text='https://www.youtube.com/watch?v=%s' % result)
         return
 
