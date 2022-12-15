@@ -3,8 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from api.chatgpt import ChatGPT
-
-import os, requests, json
+import requests, json, os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -64,13 +63,13 @@ def handle_message(event):
         TextSendMessage(text='https://www.youtube.com/watch?v=%s' % result)
         return
 
-        if working_status and event.message.text.startswith('柴柴',0, 4):
-            chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
-            reply_msg = chatgpt.get_response().replace("AI:", "", 1)
-            chatgpt.add_msg(f"AI:{reply_msg}\n")
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=reply_msg))
+    if working_status and event.message.text.startswith('柴柴',0, 4):
+        chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
+        reply_msg = chatgpt.get_response().replace("AI:", "", 1)
+        chatgpt.add_msg(f"AI:{reply_msg}\n")
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
 
 if __name__ == "__main__":
     app.run()
