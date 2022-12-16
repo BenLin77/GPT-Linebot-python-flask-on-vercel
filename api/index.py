@@ -3,12 +3,13 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from api.chatgpt import ChatGPT
-import requests, json, os
+import requests, json, os, schedule, datetime
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
+now = datetime.datetime.now()
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -49,6 +50,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
+            print(now.hours)
         return
 
     if event.message.text == "柴柴閉嘴":
