@@ -69,7 +69,7 @@ def handle_message(event):
         return
 
     if working_status and event.message.text.startswith('柴柴',0, 4):
-        if now_hour == 6 or now_hour == 11:
+        if now_hour == 9 or now_hour == 11:
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
