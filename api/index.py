@@ -85,7 +85,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text="汪汪!"))
         return
 
-    scheduler.add_job(job1, 'cron', hour=2,minute=25)
+    scheduler.add_job(job1, 'cron', hour=2,minute=30)
     # scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
     scheduler.start()
 
