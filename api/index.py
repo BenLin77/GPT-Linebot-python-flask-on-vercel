@@ -22,9 +22,11 @@ def job1():
     line_bot_api.push_message(user_id, TextSendMessage(text="汪汪!"))
     return
 
-scheduler.add_job(job1, 'cron', hour=10,minute=58)
-# scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
-scheduler.start()
+def sch():
+    scheduler.add_job(job1, 'cron', hour=12,minute=0)
+    # scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
+    scheduler.start()
+    return
 
 def findYT(keyword):
     r = requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+keyword+'&maxResults=1&order=relevance&key='+yt_id)
@@ -91,4 +93,5 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
+    sch()
     app.run()
