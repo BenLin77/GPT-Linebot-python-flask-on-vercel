@@ -17,18 +17,12 @@ scheduler = BlockingScheduler()
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-def job1():
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text="汪汪!!"))
-    return
 
 def findYT(keyword):
     r = requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+keyword+'&maxResults=1&order=relevance&key='+yt_id)
     data = json.loads(r.text)
     return data['items'][0]['id']['videoId']
 
-scheduler.add_job(job1, 'cron', hour=2,miute=20)
-# scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
-scheduler.start()
 
 # domain root
 @app.route('/')
@@ -86,6 +80,14 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=reply_msg))
+
+    def job1():
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="汪汪!"))
+        return
+
+    scheduler.add_job(job1, 'cron', hour=2,minute=25)
+    # scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
+    scheduler.start()
 
 if __name__ == "__main__":
     app.run()
