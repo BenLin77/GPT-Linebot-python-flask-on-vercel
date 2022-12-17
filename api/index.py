@@ -11,14 +11,24 @@ line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
 now_hour = datetime.datetime.now().hour
+scheduler = BlockingScheduler()
+
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
+
+def job1():
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text="汪汪!!"))
+    return
 
 def findYT(keyword):
     r = requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+keyword+'&maxResults=1&order=relevance&key='+yt_id)
     data = json.loads(r.text)
     return data['items'][0]['id']['videoId']
+
+scheduler.add_job(job1, 'cron', hour=2,miute=20)
+# scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
+scheduler.start()
 
 # domain root
 @app.route('/')
@@ -51,7 +61,6 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
-        print(now.hour)
         return
 
     if event.message.text == "柴柴閉嘴":
@@ -70,8 +79,7 @@ def handle_message(event):
         return
 
     if working_status and event.message.text.startswith('柴柴',0, 4):
-        print(now_hour)
-        if now_hour == 1 or now_hour == 18:
+        if now_hour == 4 or now_hour == 10:
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
