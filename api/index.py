@@ -12,11 +12,19 @@ working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
 now_hour = datetime.datetime.now().hour
 scheduler = BlockingScheduler()
-
+user_id = 'Uc8adad39514aff28e1724e6846e8be0a'
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
+
+def job1():
+    line_bot_api.push_message(user_id, TextSendMessage(text="汪汪!"))
+    return
+
+scheduler.add_job(job1, 'cron', hour=2,minute=53)
+# scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
+scheduler.start()
 
 def findYT(keyword):
     r = requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+keyword+'&maxResults=1&order=relevance&key='+yt_id)
@@ -81,13 +89,6 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text=reply_msg))
 
-    def job1():
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="汪汪!"))
-        return
-
-    scheduler.add_job(job1, 'cron', hour=10,minute=40)
-    # scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
-    scheduler.start()
 
 if __name__ == "__main__":
     app.run()
