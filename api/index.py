@@ -9,7 +9,7 @@ line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
-now = datetime.datetime.now()
+now_hour = datetime.datetime.now().hour
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -69,12 +69,13 @@ def handle_message(event):
         return
 
     if working_status and event.message.text.startswith('柴柴',0, 4):
-        chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
-        reply_msg = chatgpt.get_response().replace("AI:", "", 1)
-        chatgpt.add_msg(f"AI:{reply_msg}\n")
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_msg))
+        if now_hour == 6 or now_hour == 11:
+            chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
+            reply_msg = chatgpt.get_response().replace("AI:", "", 1)
+            chatgpt.add_msg(f"AI:{reply_msg}\n")
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply_msg))
 
 if __name__ == "__main__":
     app.run()
