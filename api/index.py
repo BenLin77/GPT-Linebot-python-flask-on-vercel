@@ -22,7 +22,7 @@ def job1():
     line_bot_api.push_message(user_id, TextSendMessage(text="汪汪!"))
     return
 
-scheduler.add_job(job1, 'cron', hour=2,minute=53)
+scheduler.add_job(job1, 'cron', hour=10,minute=58)
 # scheduler.add_job(job1, 'cron', hour=4, 10,minute=0)
 scheduler.start()
 
