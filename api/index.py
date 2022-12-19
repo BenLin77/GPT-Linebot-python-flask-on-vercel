@@ -99,7 +99,8 @@ def handle_message(event):
                 TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
             config.set('settings', 'say_hi', 'False')
 
-        if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
+#         if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
+        if event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
