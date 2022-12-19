@@ -45,7 +45,7 @@ def callback():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     config = configparser.ConfigParser()
-    config.read('./config.ini')
+    config.read(os.path.join(os.path.dirname(__file__), 'config.ini')
     if event.message.type != "text":
         return
 
@@ -56,14 +56,14 @@ def handle_message(event):
         return
 
     if event.message.text == "柴柴說話":
-        config['setting']['talk'] = True
+        config['settings']['talk'] = True
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
         return
 
     if event.message.text == "柴柴閉嘴":
-        config['setting']['talk'] = False
+        config['settings']['talk'] = False
         # working_status = False
         line_bot_api.reply_message(
             event.reply_token,
