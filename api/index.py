@@ -86,21 +86,21 @@ def handle_message(event):
 
     now_hour = datetime.datetime.now().hour
     if now_hour == 5 or now_hour == 11:
-        if not config.getboolean('setting', 'say_hi'):
+        if not config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
                 group_id,
                 TextSendMessage(text="掰掰~~"))
-            config['setting']['say_hi'] = True
+            config['settings']['say_hi'] = True
 
     if now_hour == 8 or now_hour == 10:
-        print(config.getboolean('setting', 'say_hi'))
-        if config.getboolean('setting', 'say_hi'):
+        print(config.getboolean('settings', 'say_hi'))
+        if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
                 user_id,
                 TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
-            config['setting']['say_hi'] = False
+            config['settings']['say_hi'] = False
 
-        if config.getboolean('setting', 'talk') and event.message.text.startswith('柴柴',0, 4):
+        if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
