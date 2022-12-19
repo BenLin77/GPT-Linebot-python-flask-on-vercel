@@ -54,11 +54,11 @@ def handle_message(event):
     if event.message.text == 'ID?' or event.message.text == 'id?':
         User_ID = TextMessage(text=event.source.user_id)
         line_bot_api.reply_message(event.reply_token, User_ID)
-        print ('Reply User ID =>' + event.source.user_id)
+        print('Reply User ID =>' + event.source.user_id)
     elif event.message.text == 'GroupID?':
         Group_ID = TextMessage(text=event.source.group_id)
         line_bot_api.reply_message(event.reply_token, Group_ID)
-        print ('Reply Group ID =>' + event.source.group_id)
+        print('Reply Group ID =>' + event.source.group_id)
         return
 
     if event.message.text == "柴柴說話":
@@ -100,6 +100,7 @@ def handle_message(event):
             config.set('settings', 'say_hi', 'False')
 
 #         if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
+    if now_hour == 4 or now_hour == 10:
         if event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
