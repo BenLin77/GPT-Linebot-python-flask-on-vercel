@@ -4,15 +4,14 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from api.chatgpt import ChatGPT
 from apscheduler.schedulers.blocking import BlockingScheduler
-import requests, json, os, datetime
+import requests, json, os, datetime, configparser
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
 # scheduler = BlockingScheduler()
-group_id = 'C5dad15cdcfd533dad16d539406bb9e67'
-# push_messages = True
+group_id = os.getenv('GROUP_ID', None)
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -45,7 +44,8 @@ def callback():
 
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global working_status
+    config = configparser.ConfigParser()
+    config.read('config.ini')
     if event.message.type != "text":
         return
 
@@ -56,14 +56,15 @@ def handle_message(event):
         return
 
     if event.message.text == "柴柴說話":
-        working_status = True
+        config['setting']['talk'] = True
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
         return
 
     if event.message.text == "柴柴閉嘴":
-        working_status = False
+        config['setting']['talk'] = False
+        # working_status = False
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「柴柴說話」 > <"))
@@ -78,15 +79,20 @@ def handle_message(event):
         return
 
     now_hour = datetime.datetime.now().hour
-    if now_hour == 4 or now_hour == 10:
-        global push_messages
-        push_messages = True
-#        if push_messages:
-#            line_bot_api.push_message(
-#                group_id,
-#                TextSendMessage(text="汪汪，又要上班了= =!!"))
-#            push_messages = False
-        if working_status and event.message.text.startswith('柴柴',0, 4):
+    if now_hour == 8 or now_hour == 11:
+            line_bot_api.push_message(
+                group_id,
+                TextSendMessage(text="掰掰~~"))
+        config['setting']['say_hi'] = True
+
+    if now_hour == 7 or now_hour == 10:
+        if config['setting']['say_hi']:
+            line_bot_api.push_message(
+                group_id,
+                TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
+            config['setting']['say_hi'] = False
+
+        if config['setting']['talk'] and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
