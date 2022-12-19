@@ -91,12 +91,11 @@ def handle_message(event):
                 TextSendMessage(text="掰掰~~"))
             config['setting']['say_hi'] = True
 
-    if now_hour == 4 or now_hour == 10:
-        print(group_id)
+    if now_hour == 8 or now_hour == 10:
         print(config.getboolean('setting', 'say_hi'))
         if config.getboolean('setting', 'say_hi'):
             line_bot_api.push_message(
-                group_id,
+                user_id,
                 TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
             config['setting']['say_hi'] = False
 
