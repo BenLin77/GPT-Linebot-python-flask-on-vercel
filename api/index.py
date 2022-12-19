@@ -12,7 +12,7 @@ working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
 # scheduler = BlockingScheduler()
 group_id = 'C5dad15cdcfd533dad16d539406bb9e67'
-push_messages = True
+# push_messages = True
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -79,11 +79,12 @@ def handle_message(event):
 
     now_hour = datetime.datetime.now().hour
     if now_hour == 4 or now_hour == 10:
+        global push_messages
+        push_messages = True
         if push_messages:
             line_bot_api.push_message(
                 group_id,
                 TextSendMessage(text="汪汪，又要上班了= ="))
-            global push_messages
             push_messages = False
         if working_status and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
