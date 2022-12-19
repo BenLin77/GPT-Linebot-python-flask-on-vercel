@@ -81,11 +81,11 @@ def handle_message(event):
     if now_hour == 4 or now_hour == 10:
         global push_messages
         push_messages = True
-        if push_messages:
-            line_bot_api.push_message(
-                group_id,
-                TextSendMessage(text="汪汪，又要上班了= ="))
-            push_messages = False
+#        if push_messages:
+#            line_bot_api.push_message(
+#                group_id,
+#                TextSendMessage(text="汪汪，又要上班了= =!!"))
+#            push_messages = False
         if working_status and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
