@@ -81,12 +81,13 @@ def handle_message(event):
 
     now_hour = datetime.datetime.now().hour
     if now_hour == 5 or now_hour == 11:
-        line_bot_api.push_message(
-            group_id,
-            TextSendMessage(text="掰掰~~"))
-        config['setting']['say_hi'] = True
+        if not config.getboolean('setting', 'say_hi'):
+            line_bot_api.push_message(
+                group_id,
+                TextSendMessage(text="掰掰~~"))
+            config['setting']['say_hi'] = True
 
-    if now_hour == 8 or now_hour == 10:
+    if now_hour == 4 or now_hour == 10:
         print(group_id)
         print(config.getboolean('setting', 'say_hi'))
         if config.getboolean('setting', 'say_hi'):
