@@ -86,6 +86,8 @@ def handle_message(event):
         config['setting']['say_hi'] = True
 
     if now_hour == 7 or now_hour == 10:
+        print(group_id)
+        print(config.getboolean('setting', 'say_hi'))
         if config.getboolean('setting', 'say_hi'):
             line_bot_api.push_message(
                 group_id,
