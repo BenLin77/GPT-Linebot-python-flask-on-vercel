@@ -10,7 +10,6 @@ line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
-now_hour = datetime.datetime.now().hour
 # scheduler = BlockingScheduler()
 group_id = 'C5dad15cdcfd533dad16d539406bb9e67'
 push_messages = True
@@ -78,6 +77,7 @@ def handle_message(event):
             TextSendMessage(text=YT_link))
         return
 
+    now_hour = datetime.datetime.now().hour
     if now_hour == 4 or now_hour == 10:
         if push_messages:
             line_bot_api.push_message(
