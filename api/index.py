@@ -46,7 +46,7 @@ def callback():
 def handle_message(event):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     config = configparser.ConfigParser()
-    print(os.path.join(BASE_DIR, 'config.ini'))
+    # print(os.path.join(BASE_DIR, 'config.ini'))
     config.read(os.path.join(BASE_DIR, 'config.ini'))
     if event.message.type != "text":
         return
@@ -92,7 +92,7 @@ def handle_message(event):
                 TextSendMessage(text="掰掰~~"))
             config['settings']['say_hi'] = True
 
-    if now_hour == 8 or now_hour == 10:
+    if now_hour == 4 or now_hour == 10:
         print(config.getboolean('settings', 'say_hi'))
         if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
