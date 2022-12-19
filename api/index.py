@@ -62,7 +62,7 @@ def handle_message(event):
         return
 
     if event.message.text == "柴柴說話":
-        config['settings']['talk'] = True
+        config.set('settings', 'talk', 'True')
         print(config.getboolean('settings', 'talk'))
         line_bot_api.reply_message(
             event.reply_token,
@@ -70,7 +70,7 @@ def handle_message(event):
         return
 
     if event.message.text == "柴柴閉嘴":
-        config['settings']['talk'] = False
+        config.set('settings', 'talk', 'False')
         print(config.getboolean('settings', 'talk'))
         # working_status = False
         line_bot_api.reply_message(
@@ -92,14 +92,14 @@ def handle_message(event):
             line_bot_api.push_message(
                 group_id,
                 TextSendMessage(text="掰掰~~"))
-            config['settings']['say_hi'] = True
+            config.set('settings', 'say_hi', 'True')
 
     if now_hour == 4 or now_hour == 10:
         if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
                 group_id,
                 TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
-            config['settings']['say_hi'] = False
+            config.set('settings', 'say_hi', 'False')
 
         if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
