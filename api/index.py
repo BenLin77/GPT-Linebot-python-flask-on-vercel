@@ -71,8 +71,6 @@ def handle_message(event):
 
     if event.message.text == "柴柴閉嘴":
         config.set('settings', 'talk', 'False')
-        print(config.getboolean('settings', 'talk'))
-        # working_status = False
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「柴柴說話」 > <"))
