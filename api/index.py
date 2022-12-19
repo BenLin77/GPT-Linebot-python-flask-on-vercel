@@ -48,6 +48,11 @@ def handle_message(event):
     if event.message.type != "text":
         return
 
+    if event.message.text == 'GroupID?':
+        Group_ID = TextMessage(text=event.source.group_id)
+        line_bot_api.reply_message(event.reply_token, Group_ID)
+        print ('Reply Group ID =>' + event.source.group_id)
+
     if event.message.text == "柴柴說話":
         working_status = True
         line_bot_api.reply_message(
@@ -63,7 +68,6 @@ def handle_message(event):
         return
 
     if event.message.text.upper().startswith('CALL', 0, 4):
-        print ('Reply Group ID =>' + event.source.group_id)
         result = findYT(event.message.text.split(" ")[1])
         YT_link = 'https://www.youtube.com/watch?v=' + result
         line_bot_api.reply_message(
