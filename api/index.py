@@ -46,6 +46,7 @@ def callback():
 def handle_message(event):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     config = configparser.ConfigParser()
+    print(os.path.join(BASE_DIR, 'config.ini'))
     config.read(os.path.join(BASE_DIR, 'config.ini'))
     if event.message.type != "text":
         return
