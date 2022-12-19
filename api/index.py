@@ -52,6 +52,7 @@ def handle_message(event):
         Group_ID = TextMessage(text=event.source.group_id)
         line_bot_api.reply_message(event.reply_token, Group_ID)
         print ('Reply Group ID =>' + event.source.group_id)
+        return
 
     if event.message.text == "柴柴說話":
         working_status = True
