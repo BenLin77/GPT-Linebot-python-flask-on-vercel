@@ -10,7 +10,7 @@ line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
-# scheduler = BlockingScheduler()
+user_id = os.getenv('USER_ID', None)
 group_id = os.getenv('GROUP_ID', None)
 
 app = Flask(__name__)
@@ -50,7 +50,11 @@ def handle_message(event):
     if event.message.type != "text":
         return
 
-    if event.message.text == 'GroupID?':
+    if event.message.text == 'ID?' or event.message.text == 'id?':
+        User_ID = TextMessage(text=event.source.user_id)
+        line_bot_api.reply_message(event.reply_token, User_ID)
+        print ('Reply User ID =>' + event.source.user_id)
+    elif event.message.text == 'GroupID?':
         Group_ID = TextMessage(text=event.source.group_id)
         line_bot_api.reply_message(event.reply_token, Group_ID)
         print ('Reply Group ID =>' + event.source.group_id)
