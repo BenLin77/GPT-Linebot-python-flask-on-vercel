@@ -11,7 +11,9 @@ line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFALUT_TALKING", default="true").lower() == "true"
 yt_id = os.getenv('YT_API_KEY', None)
 now_hour = datetime.datetime.now().hour
-scheduler = BlockingScheduler()
+# scheduler = BlockingScheduler()
+group_id = 'C5dad15cdcfd533dad16d539406bb9e67'
+push_messages = True
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -76,8 +78,14 @@ def handle_message(event):
             TextSendMessage(text=YT_link))
         return
 
-    if working_status and event.message.text.startswith('柴柴',0, 4):
-        if now_hour == 4 or now_hour == 10:
+    if now_hour == 4 or now_hour == 10:
+        if push_messages:
+            line_bot_api.push_message(
+                group_id,
+                TextSendMessage(text="汪汪，又要上班了= ="))
+            global push_messages
+            push_messages = False
+        if working_status and event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
             chatgpt.add_msg(f"AI:{reply_msg}\n")
@@ -88,3 +96,4 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run()
+
