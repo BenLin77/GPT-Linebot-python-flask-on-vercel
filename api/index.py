@@ -96,7 +96,7 @@ def handle_message(event):
         print(config.getboolean('settings', 'say_hi'))
         if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
-                user_id,
+                group_id,
                 TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
             config['settings']['say_hi'] = False
 
