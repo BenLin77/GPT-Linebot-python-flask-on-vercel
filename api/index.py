@@ -80,9 +80,9 @@ def handle_message(event):
 
     now_hour = datetime.datetime.now().hour
     if now_hour == 8 or now_hour == 11:
-            line_bot_api.push_message(
-                group_id,
-                TextSendMessage(text="掰掰~~"))
+        line_bot_api.push_message(
+            group_id,
+            TextSendMessage(text="掰掰~~"))
         config['setting']['say_hi'] = True
 
     if now_hour == 7 or now_hour == 10:
