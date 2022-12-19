@@ -45,7 +45,7 @@ def callback():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     config = configparser.ConfigParser()
-    config.read(os.path.join(os.path.dirname(__file__), 'config.ini')
+    config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
     if event.message.type != "text":
         return
 
