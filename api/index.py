@@ -63,6 +63,7 @@ def handle_message(event):
 
     if event.message.text == "柴柴說話":
         config['settings']['talk'] = True
+        print(config.getboolean('settings', 'talk'))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
@@ -70,6 +71,7 @@ def handle_message(event):
 
     if event.message.text == "柴柴閉嘴":
         config['settings']['talk'] = False
+        print(config.getboolean('settings', 'talk'))
         # working_status = False
         line_bot_api.reply_message(
             event.reply_token,
