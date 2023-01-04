@@ -96,11 +96,11 @@ def handle_message(event):
         if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
                 group_id,
-                TextSendMessage(text="信柴柴，發大財！＼(●´ϖ`●)／"))
+                TextSendMessage(text="信柴柴，2023發大財！＼(●´ϖ`●)／"))
             config.set('settings', 'say_hi', 'False')
 
 #         if config.getboolean('settings', 'talk') and event.message.text.startswith('柴柴',0, 4):
-    if now_hour == 6 or now_hour == 10:
+    if now_hour == 4 or now_hour == 10:
         if event.message.text.startswith('柴柴',0, 4):
             chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
             reply_msg = chatgpt.get_response().replace("AI:", "", 1)
