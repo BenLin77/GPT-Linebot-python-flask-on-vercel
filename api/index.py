@@ -92,7 +92,7 @@ def handle_message(event):
                 TextSendMessage(text="掰掰~~"))
             config.set('settings', 'say_hi', 'True')
 
-    if now_hour == 4 or now_hour == 10:
+    if now_hour == 6 or now_hour == 10:
         if config.getboolean('settings', 'say_hi'):
             line_bot_api.push_message(
                 group_id,
