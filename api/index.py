@@ -84,27 +84,13 @@ def handle_message(event):
             TextSendMessage(text=YT_link))
         return
 
-    now_hour = datetime.datetime.now().hour
-    if now_hour == 5 or now_hour == 11:
-        if not config.getboolean('settings', 'say_hi'):
-            line_bot_api.push_message(
-                group_id,
-                TextSendMessage(text="掰掰~~"))
-            config.set('settings', 'say_hi', 'True')
-
-    if now_hour == 2 or now_hour == 10:
-        if config.getboolean('settings', 'say_hi'):
-            line_bot_api.push_message(
-                group_id,
-                TextSendMessage(text="信柴柴，2023發大財！＼(●´ϖ`●)／"))
-            config.set('settings', 'say_hi', 'False')
-        if event.message.text.startswith('柴柴',0, 4):
-            chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
-            reply_msg = chatgpt.get_response().replace("AI:", "", 1)
-            chatgpt.add_msg(f"AI:{reply_msg}\n")
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=reply_msg))
+    if event.message.text.startswith('柴柴',0, 4):
+        chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
+        reply_msg = chatgpt.get_response().replace("AI:", "", 1)
+        chatgpt.add_msg(f"AI:{reply_msg}\n")
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
 
 
 if __name__ == "__main__":
