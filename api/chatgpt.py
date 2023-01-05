@@ -13,7 +13,7 @@ class ChatGPT:
         response = openai.Completion.create(
         model="text-davinci-003", 
         prompt=self.prompt.generate_prompt(),
-        temperature=0,
+        temperature=0.4,
         frequency_penalty = 0,
         presence_penalty = 0.6,
         max_tokens=240
