@@ -85,15 +85,12 @@ def handle_message(event):
         return
 
     if event.message.text.upper().startswith('揪團'):
+        alt_text = '柴柴壞掉了'
         with open(os.path.join(BASE_DIR, 'context.json')) as f:
-            context = json.load(f)
+            contexts = json.load(f)
             line_bot_api.reply_message(
                 event.reply_token,
-                FlexSendMessage(
-                    alt_text = f'柴柴壞掉了',
-                    context
-                )
-            )
+                FlexSendMessage(alt_text, contexts))
 
     if event.message.text.startswith('柴柴',0, 4):
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
