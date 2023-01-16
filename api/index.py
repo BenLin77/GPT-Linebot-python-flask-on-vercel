@@ -89,7 +89,11 @@ def handle_message(event):
             context = json.load(f)
             line_bot_api.reply_message(
                 event.reply_token,
-                FlexSendMessage(context))
+                FlexSendMessage(
+                    alt_text = f'柴柴壞掉了',
+                    context
+                )
+            )
 
     if event.message.text.startswith('柴柴',0, 4):
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")

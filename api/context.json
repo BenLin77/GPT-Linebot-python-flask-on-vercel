@@ -29,7 +29,7 @@
             "contents": [
               {
                 "type": "text",
-                "text": "喝咖啡",
+                "text": "寵物團",
                 "size": "xl",
                 "color": "#DEB887",
                 "weight": "bold",
@@ -37,7 +37,7 @@
               },
               {
                 "type": "text",
-                "text": "出來喝咖啡",
+                "text": "出來陪柴柴玩",
                 "size": "sm",
                 "color": "#ffffffcc"
               }
