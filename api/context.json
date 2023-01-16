@@ -1,0 +1,113 @@
+{
+  "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+        "flex": 1,
+        "size": "full",
+        "aspectRatio": "2:1",
+        "aspectMode": "cover"
+      }
+    ],
+    "paddingAll": "0px"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "喝咖啡",
+                "size": "xl",
+                "color": "#DEB887",
+                "weight": "bold",
+                "wrap": true
+              },
+              {
+                "type": "text",
+                "text": "出來喝咖啡",
+                "size": "sm",
+                "color": "#ffffffcc"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "40%",
+            "size": "xs",
+            "margin": "lg",
+            "color": "#ffffffde"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "filler"
+              }
+            ]
+          }
+        ],
+        "width": "43%",
+        "backgroundColor": "#ffffff5A",
+        "height": "6px"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "參加人數:4",
+                "margin": "lg",
+                "size": "sm",
+                "color": "#ffffffde"
+              },
+              {
+                "type": "text",
+                "text": "總人數上限:10",
+                "margin": "lg",
+                "size": "sm",
+                "color": "#ffffffde"
+              },
+              {
+                "type": "text",
+                "text": "團隊狀態：挑戰中",
+                "margin": "lg",
+                "size": "sm",
+                "color": "#ffffffde"
+              }
+            ]
+          }
+        ],
+        "margin": "xl",
+        "backgroundColor": "#ffffff1A",
+        "cornerRadius": "2px",
+        "paddingAll": "13px"
+      }
+    ],
+    "backgroundColor": "#464F69"
+  }
+}

@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 from api.chatgpt import ChatGPT
 from apscheduler.schedulers.blocking import BlockingScheduler
 import requests, json, os, datetime, configparser
@@ -83,6 +83,13 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=YT_link))
         return
+
+    if event.message.text.upper().startswith('揪團'):
+        with open('context.json') as f:
+            context = json.load(f)
+            line_bot_api.reply_message(
+                event.reply_token,
+                FlexSendMessage(context))
 
     if event.message.text.startswith('柴柴',0, 4):
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
