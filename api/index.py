@@ -85,7 +85,7 @@ def handle_message(event):
         return
 
     if event.message.text.upper().startswith('揪團'):
-        with open('context.json') as f:
+        with open(os.path.join(BASE_DIR, 'context.json')) as f:
             context = json.load(f)
             line_bot_api.reply_message(
                 event.reply_token,
