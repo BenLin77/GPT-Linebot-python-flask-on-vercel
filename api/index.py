@@ -78,6 +78,7 @@ def handle_message(event):
 
     if event.message.text.upper().startswith('CALL', 0, 4):
         result = findYT(' ',join(event.message.text.split()[1:])
+        print(result)
         YT_link = 'https://www.youtube.com/watch?v=' + result
         line_bot_api.reply_message(
             event.reply_token,
