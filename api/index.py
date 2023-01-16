@@ -85,7 +85,7 @@ def handle_message(event):
         return
 
     if event.message.text.upper().startswith('揪團'):
-        alt_text = '柴柴壞掉了'
+        alt_text = '揪團'
         with open(os.path.join(BASE_DIR, 'context.json')) as f:
             contexts = json.load(f)
             line_bot_api.reply_message(
